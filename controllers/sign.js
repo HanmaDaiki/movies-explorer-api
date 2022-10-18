@@ -13,7 +13,7 @@ module.exports.signUp = (req, res, next) => {
   bcrypt.hash(password, 10)
     .then((hash) => {
       User.create({ email, password: hash, name })
-        .then((user) => res.send({ email: user.email, name: user.name }))
+        .then(() => res.send({ message: 'Registration has been successfully completed' }))
         .catch((err) => {
           if (err.name === 'ValidationError') {
             return Promise.reject(new BadRequestError('Invalid data sent for create new user'));
