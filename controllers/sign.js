@@ -2,7 +2,7 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const BadRequestError = require('../errors/BadRequestError');
-const TakenEmailError = require('../errors/TakenEmailError');
+const TakenError = require('../errors/TakenError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const User = require('../models/user');
@@ -20,7 +20,7 @@ module.exports.signUp = (req, res, next) => {
           }
 
           if (err.code === 11000) {
-            return Promise.reject(new TakenEmailError());
+            return Promise.reject(new TakenError('Email is taken'));
           }
 
           return next();
