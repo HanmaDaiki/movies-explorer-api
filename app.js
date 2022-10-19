@@ -9,6 +9,7 @@ const movies = require('./routes/movies');
 const NotFoundError = require('./errors/NotFoudError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
+const auth = require('./middlewares/auth');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -24,6 +25,8 @@ app.use(requestLogger);
 app.use(cors);
 
 app.use('/', sign);
+
+app.use(auth);
 app.use('/users', users);
 app.use('/movies', movies);
 
