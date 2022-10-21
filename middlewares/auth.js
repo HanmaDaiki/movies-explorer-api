@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
   const token = req.headers.authorization.replace('Bearer ', '');
 
   if (!token) {
-    throw new AuthorizationError();
+    return next(new AuthorizationError());
   }
 
   let payload;
