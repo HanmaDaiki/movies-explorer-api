@@ -8,6 +8,8 @@ const index = require('./routes/index');
 const NotFoundError = require('./errors/NotFoudError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
+const { ERROR_500 } = require('./utils/statuscode');
+const { MONGO_ADRESS } = require('./utils/config');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -23,9 +25,7 @@ const apiRequestLimiter = rateLimit({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
-  useNewUrlParser: true,
-});
+mongoose.connect(MONGO_ADRESS, { useNewUrlParser: true });
 
 app.use(apiRequestLimiter);
 
@@ -43,12 +43,12 @@ app.use((req, res, next) => {
 app.use(errors());
 
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
+  const { statusCode = ERROR_500, message } = err;
 
   res
     .status(statusCode)
     .send({
-      message: statusCode === 500
+      message: statusCode === ERROR_500
         ? 'Server Error'
         : message,
     });

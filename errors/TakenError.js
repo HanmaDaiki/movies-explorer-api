@@ -1,7 +1,9 @@
+const { ERROR_409 } = require('../utils/statuscode');
+
 class TakenError extends Error {
   constructor(message = 'This is taken') {
     super(message);
-    this.statusCode = 409;
+    this.statusCode = ERROR_409;
   }
 }
 
