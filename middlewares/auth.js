@@ -1,7 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const AuthorizationError = require('../errors/AuthorizationError');
-const { JWT_DEV } = require('../utils/config');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -15,7 +14,11 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
+<<<<<<< HEAD
     payload = jwt.verify(token.replace('Bearer ', ''), NODE_ENV === 'production' ? JWT_SECRET : JWT_DEV);
+=======
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
+>>>>>>> parent of 871d809 (add-fix:errors codes file,config file+dependencies)
   } catch (err) {
     throw new AuthorizationError();
   }
