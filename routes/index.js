@@ -2,6 +2,9 @@ const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 
 const { signUp, signIn } = require('../controllers/sign');
+const auth = require('../middlewares/auth');
+const users = require('./users');
+const movies = require('./movies');
 
 router.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -16,5 +19,9 @@ router.post('/signin', celebrate({
     password: Joi.string().required(),
   }),
 }), signIn);
+
+router.use(auth);
+router.use('/users', users);
+router.use('/movies', movies);
 
 module.exports = router;
