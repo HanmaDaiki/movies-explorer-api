@@ -1,4 +1,8 @@
-const allowedCors = [];
+const allowedCors = [
+  'https://daikihanma.films.nomoredomains.icu',
+  'http://daikihanma.films.nomoredomains.icu',
+  'http://localhost:3000',
+];
 
 module.exports = (req, res, next) => {
   const { origin } = req.headers;
