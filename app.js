@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const rateLimit = require('express-rate-limit');
 const index = require('./routes/index');
 const NotFoundError = require('./errors/NotFoudError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -11,12 +12,22 @@ const cors = require('./middlewares/cors');
 const { PORT = 3000 } = process.env;
 const app = express();
 
+const apiRequestLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 10, // limit each IP to 2 requests per windowMs
+  handler: (req, res) => res.status(429).send({
+    message: 'You sent too many requests. Please wait a while then try again',
+  }),
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
+
+app.use(apiRequestLimiter);
 
 app.use(requestLogger);
 app.use(cors);
