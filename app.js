@@ -32,7 +32,7 @@ app.use(apiRequestLimiter);
 app.use(requestLogger);
 app.use(cors);
 
-app.use('/', index);
+app.use('/api', index);
 
 app.use(errorLogger);
 
