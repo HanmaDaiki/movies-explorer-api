@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const BadRequestError = require('../errors/BadRequestError');
 const TakenError = require('../errors/TakenError');
-const { JWT_DEV } = require('../utils/config');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const User = require('../models/user');
@@ -39,7 +38,7 @@ module.exports.signIn = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id.toString() },
-        NODE_ENV === 'production' ? JWT_SECRET : JWT_DEV,
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
 
