@@ -3,13 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
-const users = require('./routes/users');
-const sign = require('./routes/sign');
-const movies = require('./routes/movies');
+const index = require('./routes/index');
 const NotFoundError = require('./errors/NotFoudError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
-const auth = require('./middlewares/auth');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -24,11 +21,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 app.use(requestLogger);
 app.use(cors);
 
-app.use('/', sign);
-
-app.use(auth);
-app.use('/users', users);
-app.use('/movies', movies);
+app.use('/', index);
 
 app.use(errorLogger);
 
