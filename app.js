@@ -13,8 +13,8 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 const apiRequestLimiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 10, // limit each IP to 2 requests per windowMs
+  windowMs: 1 * 60 * 1000,
+  max: 10,
   handler: (req, res) => res.status(429).send({
     message: 'You sent too many requests. Please wait a while then try again',
   }),
