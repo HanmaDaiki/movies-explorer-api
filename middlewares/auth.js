@@ -15,7 +15,11 @@ module.exports = (req, res, next) => {
 
   try {
 <<<<<<< HEAD
+<<<<<<< HEAD
     payload = jwt.verify(token.replace('Bearer ', ''), NODE_ENV === 'production' ? JWT_SECRET : JWT_DEV);
+=======
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
+>>>>>>> parent of 871d809 (add-fix:errors codes file,config file+dependencies)
 =======
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
 >>>>>>> parent of 871d809 (add-fix:errors codes file,config file+dependencies)
