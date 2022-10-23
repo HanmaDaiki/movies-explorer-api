@@ -19,7 +19,7 @@ module.exports.getUserInfo = (req, res, next) => {
       });
     })
     .catch((err) => {
-      if (err.name === 'Validation') {
+      if (err.name === 'ValidationError') {
         return Promise.reject(new BadRequestError());
       }
 
@@ -50,7 +50,7 @@ module.exports.patchUserInfo = (req, res, next) => {
       });
     })
     .catch((err) => {
-      if (err.name === 'Validation') {
+      if (err.name === 'ValidationError') {
         return Promise.reject(new BadRequestError());
       }
 
