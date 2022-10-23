@@ -5,6 +5,7 @@ const { signUp, signIn } = require('../controllers/sign');
 const auth = require('../middlewares/auth');
 const users = require('./users');
 const movies = require('./movies');
+const NotFoundError = require('../errors/NotFoudError');
 
 router.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -22,5 +23,9 @@ router.post('/signin', celebrate({
 
 router.use('/users', auth, users);
 router.use('/movies', auth, movies);
+
+router.use(auth, (req, res, next) => {
+  next(new NotFoundError('Page Not Found'));
+});
 
 module.exports = router;

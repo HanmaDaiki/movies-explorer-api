@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const index = require('./routes/index');
-const NotFoundError = require('./errors/NotFoudError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
 const { ERROR_500 } = require('./utils/statuscode');
@@ -35,10 +34,6 @@ app.use(cors);
 app.use('/api', index);
 
 app.use(errorLogger);
-
-app.use((req, res, next) => {
-  next(new NotFoundError('Page Not Found'));
-});
 
 app.use(errors());
 
