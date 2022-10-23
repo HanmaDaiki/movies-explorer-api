@@ -27,7 +27,7 @@ module.exports.getUserInfo = (req, res, next) => {
         return Promise.reject(new NotFoundError('User Not Found'));
       }
 
-      return next();
+      return next(err);
     })
     .catch((err) => {
       next(err);
@@ -58,9 +58,7 @@ module.exports.patchUserInfo = (req, res, next) => {
         return Promise.reject(new NotFoundError('User Not Found'));
       }
 
-      return next();
+      return next(err);
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch((err) => next(err));
 };
