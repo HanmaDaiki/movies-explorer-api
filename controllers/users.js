@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoudError');
+const TakenError = require('../errors/TakenError');
 const User = require('../models/user');
 
 module.exports.getUserInfo = (req, res, next) => {
@@ -18,20 +19,7 @@ module.exports.getUserInfo = (req, res, next) => {
         name: user.name,
       });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return Promise.reject(new BadRequestError());
-      }
-
-      if (err.name === 'CastError') {
-        return Promise.reject(new NotFoundError('User Not Found'));
-      }
-
-      return next(err);
-    })
-    .catch((err) => {
-      next(err);
-    });
+    .catch((err) => next(err));
 };
 
 module.exports.patchUserInfo = (req, res, next) => {
@@ -41,7 +29,7 @@ module.exports.patchUserInfo = (req, res, next) => {
   User.findByIdAndUpdate(_id, { email, name }, { new: true })
     .then((user) => {
       if (user === null) {
-        return Promise.reject(new NotFoundError('Id Not Found'));
+        return Promise.reject(new NotFoundError('User Not Found'));
       }
 
       return res.send({
@@ -50,15 +38,18 @@ module.exports.patchUserInfo = (req, res, next) => {
       });
     })
     .catch((err) => {
+      if (err.code === 11000) {
+        return next(new TakenError('Email is taken'));
+      }
+
       if (err.name === 'ValidationError') {
-        return Promise.reject(new BadRequestError());
+        return next(new BadRequestError());
       }
 
       if (err.name === 'CastError') {
-        return Promise.reject(new NotFoundError('User Not Found'));
+        return next(new NotFoundError('User Not Found'));
       }
 
       return next(err);
-    })
-    .catch((err) => next(err));
+    });
 };

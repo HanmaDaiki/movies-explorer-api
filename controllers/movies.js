@@ -22,12 +22,11 @@ module.exports.postMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return Promise.reject(new BadRequestError('Invalid data sent for add to collection movies'));
+        return next(new BadRequestError('Invalid data sent for add to collection movies'));
       }
 
       return next(err);
-    })
-    .catch((err) => next(err));
+    });
 };
 
 module.exports.deleteMovie = (req, res, next) => {
@@ -51,10 +50,9 @@ module.exports.deleteMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return Promise.reject(new BadRequestError('Card Id invailed!'));
+        return next(new BadRequestError('Card Id invailed!'));
       }
 
       return next(err);
-    })
-    .catch((err) => next(err));
+    });
 };
