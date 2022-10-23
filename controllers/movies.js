@@ -59,7 +59,7 @@ module.exports.postMovie = (req, res, next) => {
 module.exports.deleteMovie = (req, res, next) => {
   const { id } = req.params;
 
-  Movie.findOneAndDelete({ movieId: id })
+  Movie.findOneAndDelete({ _id: id })
     .then((movie) => {
       if (movie === null) {
         return Promise.reject(new NotFoundError('Not Found This Movie in collection'));
