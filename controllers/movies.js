@@ -51,7 +51,7 @@ module.exports.postMovie = (req, res, next) => {
         return Promise.reject(new BadRequestError('Invalid data sent for add to collection movies'));
       }
 
-      return next();
+      return next(err);
     })
     .catch((err) => next(err));
 };
@@ -59,7 +59,7 @@ module.exports.postMovie = (req, res, next) => {
 module.exports.deleteMovie = (req, res, next) => {
   const { id } = req.params;
 
-  Movie.findOneAndDelete({ _id: id })
+  Movie.findOne({ _id: id })
     .then((movie) => {
       if (movie === null) {
         return Promise.reject(new NotFoundError('Not Found This Movie in collection'));
@@ -69,7 +69,11 @@ module.exports.deleteMovie = (req, res, next) => {
         return Promise.reject(new ForbiddenError());
       }
 
-      return res.send({ message: 'Movie is now delete from collection!' });
+      return movie;
+    })
+    .then((movie) => {
+      Movie.deleteOne(movie)
+        .then(() => res.send({ message: 'Movie is now delete from collection!' }));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
