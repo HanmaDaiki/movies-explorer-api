@@ -6,17 +6,18 @@
 
 ### Install
 ```
-git clone https://github.com/HanmaDaiki/movies-explorer-api
-cd movies-explorer-api
-npm install
+~/: git clone https://github.com/HanmaDaiki/movies-explorer-api
+~/: cd movies-explorer-api
+~/: npm install
 ```
+And you need [MongoDB](https://www.mongodb.com/docs/manual/installation/)
 
 ### DevMod -- Hot Reloader
 
 This mod start server with nodemo - Node Monitor!
 
 ```
-npm run dev
+~/: npm run dev
 ```
 
 ### Simple Run
@@ -24,7 +25,13 @@ npm run dev
 Start server
 
 ```
-npm run start
+~/: npm run start
+```
+
+### Start MongoDB
+
+```
+~/: mongod
 ```
 
 # About 
