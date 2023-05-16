@@ -2,11 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 const index = require('./routes/index');
 const cors = require('./middlewares/cors');
 const errorHandler = require('./middlewares/errorHandler');
 
-const { PORT = 3000, MONGO } = process.env;
+const { PORT, MONGO } = process.env;
 const app = express();
 
 app.use(bodyParser.json());
@@ -17,6 +18,8 @@ mongoose.connect(MONGO, { useNewUrlParser: true });
 app.use(cors);
 
 app.use('/api', index);
+
+app.use(errors());
 
 app.use(errorHandler);
 
