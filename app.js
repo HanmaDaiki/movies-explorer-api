@@ -4,10 +4,13 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const index = require('./routes/index');
 const cors = require('./middlewares/cors');
+const { errors } = require('celebrate');
 const apiRequestLimiter = require('./utils/rateLimit');
 const errorHandler = require('./middlewares/errorHandler');
+const { MONGO_DEV } = require('./utils/config');
 
 const { PORT = 3000, NODE_ENV, MONGO_PROD } = process.env;
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -20,6 +23,8 @@ app.use(cors);
 app.use('/api', index);
 
 app.use(errorHandler);
+
+app.use(errors());
 
 app.listen(PORT, () => {
   console.log(`Server start on http://localhost:${PORT}`);
