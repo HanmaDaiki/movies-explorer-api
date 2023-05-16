@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { errors } = require('celebrate');
 const index = require('./routes/index');
 const cors = require('./middlewares/cors');
 const errorHandler = require('./middlewares/errorHandler');
@@ -18,8 +17,6 @@ mongoose.connect(MONGO, { useNewUrlParser: true });
 app.use(cors);
 
 app.use('/api', index);
-
-app.use(errors());
 
 app.use(errorHandler);
 
