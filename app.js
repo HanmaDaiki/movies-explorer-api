@@ -8,7 +8,7 @@ const { errors } = require('celebrate');
 const apiRequestLimiter = require('./utils/rateLimit');
 const errorHandler = require('./middlewares/errorHandler');
 
-const { PORT = 3000, NODE_ENV, MONGO_PROD } = process.env;
+const { PORT, NODE_ENV, MONGO_PROD } = process.env;
 
 const app = express();
 
