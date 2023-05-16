@@ -7,7 +7,6 @@ const cors = require('./middlewares/cors');
 const { errors } = require('celebrate');
 const apiRequestLimiter = require('./utils/rateLimit');
 const errorHandler = require('./middlewares/errorHandler');
-const { MONGO_DEV } = require('./utils/config');
 
 const { PORT = 3000, NODE_ENV, MONGO_PROD } = process.env;
 
