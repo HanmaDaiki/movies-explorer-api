@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const index = require('./routes/index');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
 const apiRequestLimiter = require('./utils/rateLimit');
 const errorHandler = require('./middlewares/errorHandler');
@@ -17,13 +16,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect(MONGO, { useNewUrlParser: true });
 
-app.use(requestLogger);
 app.use(apiRequestLimiter);
 app.use(cors);
 
 app.use('/api', index);
-
-app.use(errorLogger);
 
 app.use(errors());
 
