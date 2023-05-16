@@ -21,8 +21,8 @@ router.post('/signin', celebrate({
   }),
 }), signIn);
 
-router.use('/users', auth, users);
-router.use('/movies', auth, movies);
+router.use('/users', users);
+router.use('/movies', movies);
 
 router.use(auth, (req, res, next) => {
   next(new NotFoundError('Page Not Found'));
