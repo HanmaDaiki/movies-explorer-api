@@ -6,17 +6,16 @@ const { errors } = require('celebrate');
 const index = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
-const { MONGO_DEV } = require('./utils/config');
 const apiRequestLimiter = require('./utils/rateLimit');
 const errorHandler = require('./middlewares/errorHandler');
 
-const { PORT = 3000, NODE_ENV, MONGO_PROD } = process.env;
+const { PORT = 3000, MONGO } = process.env;
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect(NODE_ENV === 'production' ? MONGO_PROD : MONGO_DEV, { useNewUrlParser: true });
+mongoose.connect(MONGO, { useNewUrlParser: true });
 
 app.use(requestLogger);
 app.use(apiRequestLimiter);
