@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect(MONGO, { useNewUrlParser: true });
 
-app.use(apiRequestLimiter);
 app.use(cors);
 
 app.use('/api', index);
