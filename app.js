@@ -4,15 +4,16 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const index = require('./routes/index');
 const cors = require('./middlewares/cors');
+const apiRequestLimiter = require('./utils/rateLimit');
 const errorHandler = require('./middlewares/errorHandler');
 
-const { PORT, MONGO } = process.env;
+const { PORT = 3000, NODE_ENV, MONGO_PROD } = process.env;
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect(MONGO, { useNewUrlParser: true });
+mongoose.connect(NODE_ENV === 'production' ? MONGO_PROD : MONGO_DEV, { useNewUrlParser: true });
 
 app.use(cors);
 
